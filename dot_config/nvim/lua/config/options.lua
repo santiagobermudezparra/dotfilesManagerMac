@@ -10,3 +10,13 @@ opt.mouse = "a"             -- enable mouse in all modes
 opt.smartcase = true        -- smart case search
 opt.ignorecase = true       -- ignore case in search (needed for smartcase)
 opt.signcolumn = "yes"      -- always show signcolumn
+
+-- Apex filetype detection (per SF-05, research Pitfall 3)
+-- Neovim has no built-in detection for Salesforce Apex files
+vim.filetype.add({
+  extension = {
+    cls = "apexcode",
+    trigger = "apexcode",
+    apex = "apexcode",
+  },
+})
