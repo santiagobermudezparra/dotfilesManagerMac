@@ -7,21 +7,21 @@
 
 ### Dotfiles Manager
 
-- [ ] **DFM-01**: chezmoi is the dotfiles manager, installable via curl binary (no brew dependency)
-- [ ] **DFM-02**: All Neovim config files are managed by chezmoi from a single GitHub repo
+- [x] **DFM-01**: chezmoi is the dotfiles manager, installable via curl binary (no brew dependency)
+- [x] **DFM-02**: All Neovim config files are managed by chezmoi from a single GitHub repo
 - [ ] **DFM-03**: Machine-specific values (apex JAR path, npm registry) handled via chezmoi templates — never hardcoded
-- [ ] **DFM-04**: Repo is safe to publish publicly — no employer names, internal URLs, or credentials committed
+- [x] **DFM-04**: Repo is safe to publish publicly — no employer names, internal URLs, or credentials committed
 - [ ] **DFM-05**: A bootstrap script installs chezmoi and applies dotfiles on a new machine in one command
 
 ### Neovim Core
 
-- [ ] **NVIM-01**: LazyVim distribution used as the foundation (stays on existing LazyVim setup)
-- [ ] **NVIM-02**: gruvbox-material colorscheme applied (matches existing personal config)
-- [ ] **NVIM-03**: Existing keymaps ported from personal config (leader mappings, scroll centering, telescope symbol finder, etc.)
-- [ ] **NVIM-04**: Existing options ported (no line numbers, scrolloff=8, mouse enabled, smartcase, signcolumn=yes)
-- [ ] **NVIM-05**: nvim-cmp completion with LSP, snippet, buffer, and path sources (or blink.cmp as modern alternative)
-- [ ] **NVIM-06**: Telescope fuzzy finder configured
-- [ ] **NVIM-07**: nvim-tree file explorer configured
+- [x] **NVIM-01**: LazyVim distribution used as the foundation (stays on existing LazyVim setup)
+- [x] **NVIM-02**: gruvbox-material colorscheme applied (matches existing personal config)
+- [x] **NVIM-03**: Existing keymaps ported from personal config (leader mappings, scroll centering, telescope symbol finder, etc.)
+- [x] **NVIM-04**: Existing options ported (no line numbers, scrolloff=8, mouse enabled, smartcase, signcolumn=yes)
+- [x] **NVIM-05**: nvim-cmp completion with LSP, snippet, buffer, and path sources (or blink.cmp as modern alternative)
+- [x] **NVIM-06**: Telescope fuzzy finder configured
+- [x] **NVIM-07**: nvim-tree file explorer configured
 - [ ] **NVIM-08**: Treesitter syntax highlighting working
 
 ### LSP & Language Support
@@ -96,18 +96,18 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| DFM-01 | Phase 1 | Pending |
-| DFM-02 | Phase 1 | Pending |
+| DFM-01 | Phase 1 | Complete |
+| DFM-02 | Phase 1 | Complete |
 | DFM-03 | Phase 1 | Pending |
-| DFM-04 | Phase 1 | Pending |
+| DFM-04 | Phase 1 | Complete |
 | DFM-05 | Phase 1 | Pending |
-| NVIM-01 | Phase 1 | Pending |
-| NVIM-02 | Phase 1 | Pending |
-| NVIM-03 | Phase 1 | Pending |
-| NVIM-04 | Phase 1 | Pending |
-| NVIM-05 | Phase 1 | Pending |
-| NVIM-06 | Phase 1 | Pending |
-| NVIM-07 | Phase 1 | Pending |
+| NVIM-01 | Phase 1 | Complete |
+| NVIM-02 | Phase 1 | Complete |
+| NVIM-03 | Phase 1 | Complete |
+| NVIM-04 | Phase 1 | Complete |
+| NVIM-05 | Phase 1 | Complete |
+| NVIM-06 | Phase 1 | Complete |
+| NVIM-07 | Phase 1 | Complete |
 | NVIM-08 | Phase 1 | Pending |
 | LSP-01 | Phase 1 | Pending |
 | LSP-02 | Phase 1 | Pending |

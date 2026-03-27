@@ -1,3 +1,17 @@
+---
+gsd_state_version: 1.0
+milestone: v1.0
+milestone_name: milestone
+status: in-progress
+last_updated: "2026-03-27T02:33:00.000Z"
+progress:
+  total_phases: 3
+  completed_phases: 0
+  total_plans: 5
+  completed_plans: 1
+  progress_bar: "[██░░░░░░░░] 20%"
+---
+
 # Project State
 
 ## Project Reference
@@ -6,22 +20,39 @@ See: .planning/PROJECT.md (updated 2026-03-27)
 
 **Core value:** A single Neovim config that works on a restricted corporate Mac, handling Salesforce CLI + Node.js development with the same look and feel as the personal setup — without leaking work context to the public GitHub repo.
 
-**Current focus:** Phase 1 — Neovim Setup (not yet started)
+**Current focus:** Phase 01 — neovim-setup (Plan 01 complete, starting Plan 02)
 
 ## Milestone
 
 **v1 — Corporate Mac Neovim Setup**
-- Phase 1: Neovim Setup ○ Pending
+
+- Phase 1: Neovim Setup ● In Progress (1/? plans complete)
 
 ## Phase Status
 
 | Phase | Name | Status | Plans |
 |-------|------|--------|-------|
-| 1 | Neovim Setup | ○ Pending | 0/0 |
+| 1 | Neovim Setup | ● In Progress | 1/5 |
+
+## Progress
+
+[██░░░░░░░░] 20% (1/5 plans)
 
 ## Last Action
 
-Project initialized. Research complete. Ready to plan Phase 1.
+Completed Phase 01 Plan 01: LazyVim foundation with gruvbox-material, custom keymaps/options, nvim-tree, telescope, and blink.cmp v1.
+
+## Decisions
+
+- **01-neovim-setup Plan 01:** blink.cmp pinned to v1.* to avoid v2 breaking API changes
+- **01-neovim-setup Plan 01:** No lang.typescript LazyVim extra enabled; ts_ls configured directly in Plan 02
+- **01-neovim-setup Plan 01:** trouble.nvim omitted per D-10; inline LSP diagnostics sufficient
+
+## Performance Metrics
+
+| Phase | Plan | Duration | Tasks | Files |
+|-------|------|----------|-------|-------|
+| 01-neovim-setup | 01 | 2min | 2 | 7 |
 
 ## Key Context for Next Session
 
@@ -32,6 +63,8 @@ Project initialized. Research complete. Ready to plan Phase 1.
 - apex_ls needs JAR from `forcedotcom/apex-jorje-lsp` GitHub releases + Java 11+
 - JAR path must use chezmoi template (machine-specific, not committed)
 - Use `ts_ls` not `tsserver` in nvim-lspconfig
+- blink.cmp v1.* is the completion engine (do NOT upgrade to v2)
+- neo-tree is disabled; nvim-tree is the file explorer
 
 ---
-*Updated: 2026-03-27 after project initialization*
+*Updated: 2026-03-27 after completing Phase 01 Plan 01*
