@@ -27,7 +27,7 @@
 ### LSP & Language Support
 
 - [x] **LSP-01**: Mason.nvim manages LSP server installation (bash-language-server, marksman, typescript-language-server, yaml-language-server, json-lsp)
-- [ ] **LSP-02**: ts_ls (TypeScript/JavaScript) configured via nvim-lspconfig
+- [x] **LSP-02**: ts_ls (TypeScript/JavaScript) configured via nvim-lspconfig
 - [ ] **LSP-03**: apex_ls configured pointing to apex-jorje-lsp JAR (path via chezmoi template)
 - [x] **LSP-04**: json-lsp configured with SchemaStore schemas (package.json, tsconfig.json validation)
 - [x] **LSP-05**: yaml-language-server configured (covers Salesforce metadata YAML)
@@ -51,15 +51,15 @@
 
 ### Node.js / JavaScript / TypeScript Development
 
-- [ ] **NODE-01**: ts_ls LSP provides completions, go-to-definition, hover, diagnostics for JS/TS files
-- [ ] **NODE-02**: conform.nvim configured with prettier for JS/TS/JSON formatting
-- [ ] **NODE-03**: ESLint diagnostics integrated (via eslint-lsp or nvim-lint)
+- [x] **NODE-01**: ts_ls LSP provides completions, go-to-definition, hover, diagnostics for JS/TS files
+- [x] **NODE-02**: conform.nvim configured with prettier for JS/TS/JSON formatting
+- [x] **NODE-03**: ESLint diagnostics integrated (via eslint-lsp or nvim-lint)
 - [x] **NODE-04**: b0o/schemastore.nvim provides JSON schemas for package.json and tsconfig.json
-- [ ] **NODE-05**: tsx files handled correctly (JSX syntax highlighting + ts_ls)
+- [x] **NODE-05**: tsx files handled correctly (JSX syntax highlighting + ts_ls)
 
 ### Formatting & Diagnostics
 
-- [ ] **FMT-01**: conform.nvim configured for format-on-save (JS, TS, JSON, CSS, HTML via prettier)
+- [x] **FMT-01**: conform.nvim configured for format-on-save (JS, TS, JSON, CSS, HTML via prettier)
 - [ ] **FMT-02**: No formatter configured for Apex (none exists; LSP diagnostics only)
 - [ ] **DIAG-01**: trouble.nvim (or equivalent) provides diagnostic list UI
 
@@ -110,7 +110,7 @@
 | NVIM-07 | Phase 1 | Complete |
 | NVIM-08 | Phase 1 | Complete |
 | LSP-01 | Phase 1 | Complete |
-| LSP-02 | Phase 1 | Pending |
+| LSP-02 | Phase 1 | Complete |
 | LSP-03 | Phase 1 | Pending |
 | LSP-04 | Phase 1 | Complete |
 | LSP-05 | Phase 1 | Complete |
@@ -125,12 +125,12 @@
 | SF-03 | Phase 1 | Pending |
 | SF-04 | Phase 1 | Pending |
 | SF-05 | Phase 1 | Pending |
-| NODE-01 | Phase 1 | Pending |
-| NODE-02 | Phase 1 | Pending |
-| NODE-03 | Phase 1 | Pending |
+| NODE-01 | Phase 1 | Complete |
+| NODE-02 | Phase 1 | Complete |
+| NODE-03 | Phase 1 | Complete |
 | NODE-04 | Phase 1 | Complete |
-| NODE-05 | Phase 1 | Pending |
-| FMT-01 | Phase 1 | Pending |
+| NODE-05 | Phase 1 | Complete |
+| FMT-01 | Phase 1 | Complete |
 | FMT-02 | Phase 1 | Pending |
 | DIAG-01 | Phase 1 | Pending |
 
