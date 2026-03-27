@@ -1,0 +1,29 @@
+-- apex_ls: Apex Language Server (per D-12, D-14, LSP-03, SF-04)
+-- JAR path comes from chezmoi template variable: apexJarPath
+-- Set in ~/.config/chezmoi/chezmoi.toml under [data]
+-- apex_ls is NOT managed by Mason (research Pitfall 5)
+return {
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      servers = {
+        apex_ls = {
+          cmd = {
+            "java",
+            "-cp", "{{ .apexJarPath }}",
+            "-Ddebug.internal.errors=true",
+            "-Ddebug.semantic.errors=true",
+            "-Dlwc.typegeneration.disabled=true",
+            "apex.jorje.lsp.ApexLanguageServerLauncher",
+          },
+          filetypes = { "apexcode" },
+          root_dir = function(fname)
+            return require("lspconfig.util").root_pattern("sfdx-project.json")(fname)
+          end,
+          -- Semantic errors enabled (per D-12, SF-04)
+          -- Set via -Ddebug.semantic.errors=true in cmd above
+        },
+      },
+    },
+  },
+}
