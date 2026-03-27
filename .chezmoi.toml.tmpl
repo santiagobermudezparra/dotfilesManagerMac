@@ -1,0 +1,6 @@
+# chezmoi configuration template
+# Machine-specific values are prompted on first run (per D-27, DFM-03)
+# This file is processed by chezmoi and written to ~/.config/chezmoi/chezmoi.toml
+
+[data]
+  apexJarPath = {{ promptStringOnce . "apexJarPath" "Path to apex-jorje-lsp.jar (e.g., /Users/you/.local/share/nvim/apex-ls/apex-jorje-lsp.jar)" }}
