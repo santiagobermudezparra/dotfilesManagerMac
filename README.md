@@ -4,26 +4,81 @@ A corporate Mac Neovim setup using **chezmoi**, designed for restricted network 
 
 ## Quick Start
 
-### Fresh Machine Setup (One-liner)
+### Prerequisites (Install First)
+
+Before setting up, install these tools on a fresh Mac:
 
 ```bash
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply santiagobermudezparra/DotfilesManagerMac
+# Install Homebrew (if not already installed)
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Install required tools
+brew install neovim         # Neovim v0.11+
+brew install openjdk@11    # Java for Apex LSP
+# Optional but recommended:
+brew install node          # Node.js for TypeScript/JavaScript
 ```
 
-This command:
-1. **Installs chezmoi** to `~/.local/bin/chezmoi`
-2. **Clones this repo** to `~/.local/share/chezmoi`
-3. **Prompts for `apexJarPath`** — the path to your Apex Language Server JAR (see Prerequisites)
-4. **Deploys all configs** to `~/.config/nvim/`
-5. **Runs bootstrap script** to download the Apex LSP JAR (if curl succeeds)
+### Fresh Machine Setup (Step-by-Step)
 
-After the script completes, open Neovim:
+The setup process has three steps because the one-liner requires TTY input:
+
+#### Step 1: Install chezmoi
+
+```bash
+sh -c "$(curl -fsLS get.chezmoi.io)"
+```
+
+This installs chezmoi to `./bin/chezmoi` in your current directory.
+
+#### Step 2: Clone and initialize your dotfiles
+
+```bash
+./bin/chezmoi init santiagobermudezparra/DotfilesManagerMac
+```
+
+This clones the repo to `~/.local/share/chezmoi` but **does not yet apply** the configs.
+
+#### Step 3: Create chezmoi config with JAR path
+
+Create the chezmoi config file (this is where the TTY issue is solved):
+
+```bash
+mkdir -p ~/.config/chezmoi
+cat > ~/.config/chezmoi/chezmoi.toml << 'EOF'
+[data]
+apexJarPath = "/Users/$(whoami)/.local/share/nvim/apex-ls/apex-jorje-lsp.jar"
+EOF
+```
+
+Or if you already have the Apex JAR downloaded elsewhere, point to that path:
+
+```bash
+cat > ~/.config/chezmoi/chezmoi.toml << 'EOF'
+[data]
+apexJarPath = "/path/to/your/apex-jorje-lsp.jar"
+EOF
+```
+
+#### Step 4: Apply the configuration
+
+```bash
+./bin/chezmoi apply
+```
+
+This will:
+- Deploy Neovim config to `~/.config/nvim/`
+- Run the bootstrap script (downloads Apex JAR if needed)
+- Verify all prerequisites
+
+#### Step 5: Open Neovim
 
 ```bash
 nvim
 ```
 
-Neovim will auto-install LazyVim and all plugins on first launch. This may take 30–60 seconds.
+On first launch, lazy.nvim will download and install all plugins (~30–60 seconds).
+You should see the **gruvbox-material** colorscheme (warm brown/orange tones) once complete.
 
 ---
 
@@ -182,9 +237,17 @@ DotfilesManagerMac/
 
 ## Troubleshooting
 
+### The one-liner doesn't work ("chezmoi: command not found" or nothing happens)
+
+**Why:** The original one-liner doesn't work because:
+1. The chezmoi install script requires TTY input to run `chezmoi init`, but the subshell can't access it
+2. The `.chezmoi.toml.tmpl` file requires the `apexJarPath` variable before chezmoi can apply configs
+
+**Solution:** Use the **step-by-step setup** above instead (Steps 1–5).
+
 ### "command not found: nvim"
 
-Neovim is not installed. After `chezmoi apply`, install it:
+Neovim is not installed. Install it first:
 
 ```bash
 brew install neovim
@@ -192,7 +255,7 @@ brew install neovim
 
 Or download from [neovim.io](https://neovim.io/download/).
 
-Then reopen Neovim:
+Then try again:
 
 ```bash
 nvim
@@ -344,6 +407,61 @@ ensure_installed = { ..., "new-lsp-server" },
 - **LSP separation:** Mason (tool install), nvim-lspconfig (server settings), language-specific files (configs)
 
 ---
+
+## How I Fixed The Setup (Technical Details)
+
+When the one-liner failed, here's exactly what I did to get it working:
+
+### Problem 1: The one-liner installs chezmoi but doesn't run init/apply
+
+```bash
+# ❌ This doesn't work:
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply ...
+# The script only downloads chezmoi, doesn't run it
+
+# ✅ Fixed by splitting into steps:
+sh -c "$(curl -fsLS get.chezmoi.io)"        # Step 1: Install
+./bin/chezmoi init santiagobermudezparra... # Step 2: Clone
+```
+
+### Problem 2: chezmoi init clones the repo but doesn't fetch commits
+
+```bash
+# The repo was initialized but had no commits
+cd ~/.local/share/chezmoi && git pull origin main
+
+# Now the files exist
+ls dot_config/nvim/
+```
+
+### Problem 3: chezmoi apply fails because apexJarPath is missing
+
+```bash
+# ❌ Error: "map has no entry for key "apexJarPath""
+# The `.chezmoi.toml.tmpl` file tries to render {{ .apexJarPath }}
+# but the config file doesn't exist yet
+
+# ✅ Fixed by creating the config file manually:
+mkdir -p ~/.config/chezmoi
+cat > ~/.config/chezmoi/chezmoi.toml << 'EOF'
+[data]
+apexJarPath = "/Users/YOU/.local/share/nvim/apex-ls/apex-jorje-lsp.jar"
+EOF
+
+# Now chezmoi apply works
+./bin/chezmoi apply
+```
+
+### Problem 4: The chezmoi init prompt can't open TTY in CI/headless mode
+
+```bash
+# ❌ Error: "could not open a new TTY: open /dev/tty: device not configured"
+# The `.chezmoi.toml.tmpl` uses promptStringOnce which requires user input
+# This fails in non-interactive shells
+
+# ✅ Fixed by creating the config file before running init
+# (See Problem 3 above)
+```
 
 ## Security & Compliance
 
