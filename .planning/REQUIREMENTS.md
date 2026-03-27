@@ -9,9 +9,9 @@
 
 - [x] **DFM-01**: chezmoi is the dotfiles manager, installable via curl binary (no brew dependency)
 - [x] **DFM-02**: All Neovim config files are managed by chezmoi from a single GitHub repo
-- [ ] **DFM-03**: Machine-specific values (apex JAR path, npm registry) handled via chezmoi templates — never hardcoded
+- [x] **DFM-03**: Machine-specific values (apex JAR path, npm registry) handled via chezmoi templates — never hardcoded
 - [x] **DFM-04**: Repo is safe to publish publicly — no employer names, internal URLs, or credentials committed
-- [ ] **DFM-05**: A bootstrap script installs chezmoi and applies dotfiles on a new machine in one command
+- [x] **DFM-05**: A bootstrap script installs chezmoi and applies dotfiles on a new machine in one command
 
 ### Neovim Core
 
@@ -98,9 +98,9 @@
 |-------------|-------|--------|
 | DFM-01 | Phase 1 | Complete |
 | DFM-02 | Phase 1 | Complete |
-| DFM-03 | Phase 1 | Pending |
+| DFM-03 | Phase 1 | Complete |
 | DFM-04 | Phase 1 | Complete |
-| DFM-05 | Phase 1 | Pending |
+| DFM-05 | Phase 1 | Complete |
 | NVIM-01 | Phase 1 | Complete |
 | NVIM-02 | Phase 1 | Complete |
 | NVIM-03 | Phase 1 | Complete |

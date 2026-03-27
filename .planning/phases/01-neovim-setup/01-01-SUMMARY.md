@@ -131,6 +131,10 @@ None - no external service configuration required.
 
 None - all config is wired. blink.cmp sources are declared but LSP sources will populate once LSP servers are configured in Plan 02.
 
+## Self-Check: PASSED
+
+All 7 config files found. Both task commits (2a0897c, 7ac6021) and docs commit (f55d1b6) verified in git log.
+
 ---
 *Phase: 01-neovim-setup*
 *Completed: 2026-03-27*

@@ -20,14 +20,14 @@
 
 **Requirements covered:** DFM-01–05, NVIM-01–08, LSP-01–06, TS-01–05, SF-01–05, NODE-01–05, FMT-01–02, DIAG-01
 
-**Plans:** 4/5 plans executed
+**Plans:** 5/5 plans complete
 
 Plans:
 - [x] 01-01-PLAN.md — chezmoi structure + LazyVim bootstrap + core config (options, keymaps, colorscheme, UI, completion)
 - [x] 01-02-PLAN.md — Treesitter parsers + Mason + shared LSP infrastructure (jsonls, yamlls, SchemaStore)
 - [x] 01-03-PLAN.md — Salesforce config (sf.nvim, apex_ls template, toggleterm, Apex filetypes)
 - [x] 01-04-PLAN.md — TypeScript/Node.js config (ts_ls, eslint-lsp, conform.nvim + prettier)
-- [ ] 01-05-PLAN.md — Bootstrap script + chezmoi config template + final verification
+- [x] 01-05-PLAN.md — Bootstrap script + chezmoi config template + final verification
 
 **Canonical refs:**
 - `.planning/PROJECT.md` — constraints and key decisions

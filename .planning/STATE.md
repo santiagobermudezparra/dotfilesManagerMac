@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-27T02:44:45.714Z"
+last_updated: "2026-03-27T02:47:16.688Z"
 progress:
   total_phases: 3
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 5
-  completed_plans: 4
+  completed_plans: 5
 ---
 
 # Project State
@@ -54,6 +54,8 @@ Completed Phase 01 Plan 01: LazyVim foundation with gruvbox-material, custom key
 - [Phase 01-neovim-setup]: Plan 04: Apex excluded from conform.nvim formatters_by_ft per D-22/FMT-02 (no formatter exists)
 - [Phase 01-neovim-setup]: Plan 03: apex_ls.lua.tmpl uses .tmpl extension so chezmoi renders JAR path at apply time
 - [Phase 01-neovim-setup]: Plan 03: enable_hotkeys=false in sf.nvim with 6 explicit keymap definitions
+- [Phase 01-neovim-setup]: Plan 05: Bootstrap curl uses -fSL no -k flag; failure is non-fatal with manual instructions printed
+- [Phase 01-neovim-setup]: Plan 05: chezmoi promptStringOnce stores apexJarPath persistently in ~/.config/chezmoi/chezmoi.toml
 
 ## Performance Metrics
 
@@ -63,6 +65,7 @@ Completed Phase 01 Plan 01: LazyVim foundation with gruvbox-material, custom key
 | Phase 01-neovim-setup P02 | 1min | 2 tasks | 2 files |
 | Phase 01-neovim-setup P04 | 2min | 2 tasks | 2 files |
 | Phase 01-neovim-setup P03 | 2 | 2 tasks | 3 files |
+| Phase 01-neovim-setup P05 | 3min | 1 tasks | 2 files |
 
 ## Key Context for Next Session
 
