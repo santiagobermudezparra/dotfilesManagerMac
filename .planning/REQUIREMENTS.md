@@ -28,7 +28,7 @@
 
 - [x] **LSP-01**: Mason.nvim manages LSP server installation (bash-language-server, marksman, typescript-language-server, yaml-language-server, json-lsp)
 - [x] **LSP-02**: ts_ls (TypeScript/JavaScript) configured via nvim-lspconfig
-- [ ] **LSP-03**: apex_ls configured pointing to apex-jorje-lsp JAR (path via chezmoi template)
+- [x] **LSP-03**: apex_ls configured pointing to apex-jorje-lsp JAR (path via chezmoi template)
 - [x] **LSP-04**: json-lsp configured with SchemaStore schemas (package.json, tsconfig.json validation)
 - [x] **LSP-05**: yaml-language-server configured (covers Salesforce metadata YAML)
 - [x] **LSP-06**: bash-language-server and marksman retained from existing config
@@ -43,11 +43,11 @@
 
 ### Salesforce Development
 
-- [ ] **SF-01**: sf.nvim plugin installed and configured (requires sf CLI v2 and Neovim v0.11+)
-- [ ] **SF-02**: sf.nvim provides: deploy metadata, retrieve metadata, run Apex tests, open org in browser
-- [ ] **SF-03**: toggleterm.nvim (or equivalent) configured for sf CLI terminal output
-- [ ] **SF-04**: apex_ls semantic error checking enabled
-- [ ] **SF-05**: Apex and SOQL filetypes recognized and highlighted via treesitter
+- [x] **SF-01**: sf.nvim plugin installed and configured (requires sf CLI v2 and Neovim v0.11+)
+- [x] **SF-02**: sf.nvim provides: deploy metadata, retrieve metadata, run Apex tests, open org in browser
+- [x] **SF-03**: toggleterm.nvim (or equivalent) configured for sf CLI terminal output
+- [x] **SF-04**: apex_ls semantic error checking enabled
+- [x] **SF-05**: Apex and SOQL filetypes recognized and highlighted via treesitter
 
 ### Node.js / JavaScript / TypeScript Development
 
@@ -60,8 +60,8 @@
 ### Formatting & Diagnostics
 
 - [x] **FMT-01**: conform.nvim configured for format-on-save (JS, TS, JSON, CSS, HTML via prettier)
-- [ ] **FMT-02**: No formatter configured for Apex (none exists; LSP diagnostics only)
-- [ ] **DIAG-01**: trouble.nvim (or equivalent) provides diagnostic list UI
+- [x] **FMT-02**: No formatter configured for Apex (none exists; LSP diagnostics only)
+- [x] **DIAG-01**: trouble.nvim (or equivalent) provides diagnostic list UI
 
 ## v2 Requirements
 
@@ -111,7 +111,7 @@
 | NVIM-08 | Phase 1 | Complete |
 | LSP-01 | Phase 1 | Complete |
 | LSP-02 | Phase 1 | Complete |
-| LSP-03 | Phase 1 | Pending |
+| LSP-03 | Phase 1 | Complete |
 | LSP-04 | Phase 1 | Complete |
 | LSP-05 | Phase 1 | Complete |
 | LSP-06 | Phase 1 | Complete |
@@ -120,19 +120,19 @@
 | TS-03 | Phase 1 | Complete |
 | TS-04 | Phase 1 | Complete |
 | TS-05 | Phase 1 | Complete |
-| SF-01 | Phase 1 | Pending |
-| SF-02 | Phase 1 | Pending |
-| SF-03 | Phase 1 | Pending |
-| SF-04 | Phase 1 | Pending |
-| SF-05 | Phase 1 | Pending |
+| SF-01 | Phase 1 | Complete |
+| SF-02 | Phase 1 | Complete |
+| SF-03 | Phase 1 | Complete |
+| SF-04 | Phase 1 | Complete |
+| SF-05 | Phase 1 | Complete |
 | NODE-01 | Phase 1 | Complete |
 | NODE-02 | Phase 1 | Complete |
 | NODE-03 | Phase 1 | Complete |
 | NODE-04 | Phase 1 | Complete |
 | NODE-05 | Phase 1 | Complete |
 | FMT-01 | Phase 1 | Complete |
-| FMT-02 | Phase 1 | Pending |
-| DIAG-01 | Phase 1 | Pending |
+| FMT-02 | Phase 1 | Complete |
+| DIAG-01 | Phase 1 | Complete |
 
 **Coverage:**
 - v1 requirements: 37 total
