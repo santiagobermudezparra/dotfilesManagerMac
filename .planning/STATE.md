@@ -2,14 +2,13 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: in-progress
-last_updated: "2026-03-27T02:33:00.000Z"
+status: unknown
+last_updated: "2026-03-27T02:36:35.442Z"
 progress:
   total_phases: 3
   completed_phases: 0
   total_plans: 5
-  completed_plans: 1
-  progress_bar: "[██░░░░░░░░] 20%"
+  completed_plans: 2
 ---
 
 # Project State
@@ -47,12 +46,16 @@ Completed Phase 01 Plan 01: LazyVim foundation with gruvbox-material, custom key
 - **01-neovim-setup Plan 01:** blink.cmp pinned to v1.* to avoid v2 breaking API changes
 - **01-neovim-setup Plan 01:** No lang.typescript LazyVim extra enabled; ts_ls configured directly in Plan 02
 - **01-neovim-setup Plan 01:** trouble.nvim omitted per D-10; inline LSP diagnostics sufficient
+- [Phase 01-neovim-setup]: Plan 02: apex_ls excluded from Mason ensure_installed — JAR requires curl bootstrap install
+- [Phase 01-neovim-setup]: Plan 02: ts_ls and eslint server configs deferred to typescript.lua in plan 04 for clear ownership
+- [Phase 01-neovim-setup]: Plan 02: sflog treesitter parser excluded due to LOW confidence in nvim-treesitter availability
 
 ## Performance Metrics
 
 | Phase | Plan | Duration | Tasks | Files |
 |-------|------|----------|-------|-------|
 | 01-neovim-setup | 01 | 2min | 2 | 7 |
+| Phase 01-neovim-setup P02 | 1min | 2 tasks | 2 files |
 
 ## Key Context for Next Session
 

@@ -22,24 +22,24 @@
 - [x] **NVIM-05**: nvim-cmp completion with LSP, snippet, buffer, and path sources (or blink.cmp as modern alternative)
 - [x] **NVIM-06**: Telescope fuzzy finder configured
 - [x] **NVIM-07**: nvim-tree file explorer configured
-- [ ] **NVIM-08**: Treesitter syntax highlighting working
+- [x] **NVIM-08**: Treesitter syntax highlighting working
 
 ### LSP & Language Support
 
-- [ ] **LSP-01**: Mason.nvim manages LSP server installation (bash-language-server, marksman, typescript-language-server, yaml-language-server, json-lsp)
+- [x] **LSP-01**: Mason.nvim manages LSP server installation (bash-language-server, marksman, typescript-language-server, yaml-language-server, json-lsp)
 - [ ] **LSP-02**: ts_ls (TypeScript/JavaScript) configured via nvim-lspconfig
 - [ ] **LSP-03**: apex_ls configured pointing to apex-jorje-lsp JAR (path via chezmoi template)
-- [ ] **LSP-04**: json-lsp configured with SchemaStore schemas (package.json, tsconfig.json validation)
-- [ ] **LSP-05**: yaml-language-server configured (covers Salesforce metadata YAML)
-- [ ] **LSP-06**: bash-language-server and marksman retained from existing config
+- [x] **LSP-04**: json-lsp configured with SchemaStore schemas (package.json, tsconfig.json validation)
+- [x] **LSP-05**: yaml-language-server configured (covers Salesforce metadata YAML)
+- [x] **LSP-06**: bash-language-server and marksman retained from existing config
 
 ### Treesitter Parsers
 
-- [ ] **TS-01**: apex, soql, sosl parsers installed (Salesforce)
-- [ ] **TS-02**: javascript, typescript, tsx parsers installed (Node.js / LWC)
-- [ ] **TS-03**: html, css parsers installed (LWC templates)
-- [ ] **TS-04**: xml parser installed (Salesforce package.xml, metadata)
-- [ ] **TS-05**: Existing parsers retained: bash, lua, python, json, yaml, vim, vimdoc, go, bicep, terraform, c_sharp
+- [x] **TS-01**: apex, soql, sosl parsers installed (Salesforce)
+- [x] **TS-02**: javascript, typescript, tsx parsers installed (Node.js / LWC)
+- [x] **TS-03**: html, css parsers installed (LWC templates)
+- [x] **TS-04**: xml parser installed (Salesforce package.xml, metadata)
+- [x] **TS-05**: Existing parsers retained: bash, lua, python, json, yaml, vim, vimdoc, go, bicep, terraform, c_sharp
 
 ### Salesforce Development
 
@@ -54,7 +54,7 @@
 - [ ] **NODE-01**: ts_ls LSP provides completions, go-to-definition, hover, diagnostics for JS/TS files
 - [ ] **NODE-02**: conform.nvim configured with prettier for JS/TS/JSON formatting
 - [ ] **NODE-03**: ESLint diagnostics integrated (via eslint-lsp or nvim-lint)
-- [ ] **NODE-04**: b0o/schemastore.nvim provides JSON schemas for package.json and tsconfig.json
+- [x] **NODE-04**: b0o/schemastore.nvim provides JSON schemas for package.json and tsconfig.json
 - [ ] **NODE-05**: tsx files handled correctly (JSX syntax highlighting + ts_ls)
 
 ### Formatting & Diagnostics
@@ -108,18 +108,18 @@
 | NVIM-05 | Phase 1 | Complete |
 | NVIM-06 | Phase 1 | Complete |
 | NVIM-07 | Phase 1 | Complete |
-| NVIM-08 | Phase 1 | Pending |
-| LSP-01 | Phase 1 | Pending |
+| NVIM-08 | Phase 1 | Complete |
+| LSP-01 | Phase 1 | Complete |
 | LSP-02 | Phase 1 | Pending |
 | LSP-03 | Phase 1 | Pending |
-| LSP-04 | Phase 1 | Pending |
-| LSP-05 | Phase 1 | Pending |
-| LSP-06 | Phase 1 | Pending |
-| TS-01 | Phase 1 | Pending |
-| TS-02 | Phase 1 | Pending |
-| TS-03 | Phase 1 | Pending |
-| TS-04 | Phase 1 | Pending |
-| TS-05 | Phase 1 | Pending |
+| LSP-04 | Phase 1 | Complete |
+| LSP-05 | Phase 1 | Complete |
+| LSP-06 | Phase 1 | Complete |
+| TS-01 | Phase 1 | Complete |
+| TS-02 | Phase 1 | Complete |
+| TS-03 | Phase 1 | Complete |
+| TS-04 | Phase 1 | Complete |
+| TS-05 | Phase 1 | Complete |
 | SF-01 | Phase 1 | Pending |
 | SF-02 | Phase 1 | Pending |
 | SF-03 | Phase 1 | Pending |
@@ -128,7 +128,7 @@
 | NODE-01 | Phase 1 | Pending |
 | NODE-02 | Phase 1 | Pending |
 | NODE-03 | Phase 1 | Pending |
-| NODE-04 | Phase 1 | Pending |
+| NODE-04 | Phase 1 | Complete |
 | NODE-05 | Phase 1 | Pending |
 | FMT-01 | Phase 1 | Pending |
 | FMT-02 | Phase 1 | Pending |
