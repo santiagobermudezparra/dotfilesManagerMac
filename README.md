@@ -26,15 +26,22 @@ The setup process has three steps because the one-liner requires TTY input:
 #### Step 1: Install chezmoi
 
 ```bash
-sh -c "$(curl -fsLS get.chezmoi.io)"
+sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin
 ```
 
-This installs chezmoi to `./bin/chezmoi` in your current directory.
+This downloads and installs chezmoi to `~/.local/bin/chezmoi`.
+
+Add `~/.local/bin` to your PATH if it's not already there:
+
+```bash
+export PATH="$HOME/.local/bin:$PATH"
+# Add this line to your ~/.zshrc or ~/.bash_profile to make it permanent
+```
 
 #### Step 2: Clone and initialize your dotfiles
 
 ```bash
-./bin/chezmoi init santiagobermudezparra/DotfilesManagerMac
+chezmoi init santiagobermudezparra/DotfilesManagerMac
 ```
 
 This clones the repo to `~/.local/share/chezmoi` but **does not yet apply** the configs.
@@ -63,7 +70,7 @@ EOF
 #### Step 4: Apply the configuration
 
 ```bash
-./bin/chezmoi apply
+chezmoi apply
 ```
 
 This will:
@@ -417,11 +424,11 @@ When the one-liner failed, here's exactly what I did to get it working:
 ```bash
 # ❌ This doesn't work:
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply ...
-# The script only downloads chezmoi, doesn't run it
+# The script only downloads chezmoi, doesn't run it in the subshell
 
 # ✅ Fixed by splitting into steps:
-sh -c "$(curl -fsLS get.chezmoi.io)"        # Step 1: Install
-./bin/chezmoi init santiagobermudezparra... # Step 2: Clone
+sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin  # Step 1: Install to PATH
+chezmoi init santiagobermudezparra/DotfilesManagerMac   # Step 2: Clone
 ```
 
 ### Problem 2: chezmoi init clones the repo but doesn't fetch commits
