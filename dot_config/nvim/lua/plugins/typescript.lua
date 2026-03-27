@@ -1,5 +1,5 @@
 -- TypeScript/JavaScript LSP configuration (per D-17, D-19)
--- IMPORTANT: Do NOT enable LazyVim's lang.typescript extra (it installs a different TS server)
+-- IMPORTANT: Do NOT enable LazyVim's TypeScript language extra (it installs a different TS server)
 -- ts_ls is configured directly via nvim-lspconfig (research Pitfall 2)
 return {
   {
