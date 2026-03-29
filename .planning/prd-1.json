@@ -1,0 +1,103 @@
+{
+  "project": "DotfilesManagerMac",
+  "branchName": "ralph/docs-and-bootstrap-improvements",
+  "description": "Review & Enhance README.md and bootstrap script with improved clarity, error handling, and network resilience for corporate Mac setups",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Audit README.md for clarity and completeness",
+      "description": "As a new user, I want clear, accurate documentation so I can set up DotfilesManagerMac correctly on my corporate Mac.",
+      "acceptanceCriteria": [
+        "All prerequisites documented (macOS version, tools, network requirements)",
+        "Each setup step matches actual behavior",
+        "All error cases have corresponding Troubleshooting sections",
+        "Verify DFM-04 compliance (no credentials or internal information)",
+        "README renders correctly on GitHub",
+        "Typecheck passes"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-002",
+      "title": "Add visual decision trees to setup flow",
+      "description": "As a first-time user, I want visual diagrams to guide me through setup decisions so I don't get stuck.",
+      "acceptanceCriteria": [
+        "Add ASCII decision tree for 'Fresh Machine Setup'",
+        "Add decision tree for 'JAR: already exists vs needs download'",
+        "Add quick-reference table for prerequisite tools and versions",
+        "Maintain markdown readability (ASCII art, no images)",
+        "Decision trees direct to relevant Troubleshooting sections",
+        "Typecheck passes"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-003",
+      "title": "Add 'Common Setup Failures' quick-reference",
+      "description": "As a user facing setup errors, I want a quick lookup table to find my error and its solution immediately.",
+      "acceptanceCriteria": [
+        "Create 2-column table: Error Message → Solution",
+        "Include: network errors, permission errors, missing tools, TTY errors",
+        "Each row links to detailed Troubleshooting section",
+        "Include Zscaler/proxy-related failures",
+        "Place prominently in Troubleshooting section",
+        "Typecheck passes"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-004",
+      "title": "Enhance bootstrap script with contextual errors and retries",
+      "description": "As a user with network issues, I want the bootstrap script to retry failed downloads and explain what went wrong.",
+      "acceptanceCriteria": [
+        "Implement exponential backoff for JAR download (current: fixed 3 retries)",
+        "Add contextual error messages distinguishing: network vs permission vs missing tools",
+        "Output suggests next steps for each failure type",
+        "Log all bootstrap actions to ~/.local/share/dotfiles-bootstrap.log",
+        "Improve curl output logging for debugging",
+        "Typecheck passes"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-005",
+      "title": "Add non-interactive mode for CI/automation",
+      "description": "As a DevOps engineer, I want to run bootstrap in automated environments without TTY interaction.",
+      "acceptanceCriteria": [
+        "Add --non-interactive flag to bootstrap script",
+        "Use sensible defaults when TTY unavailable (e.g., APEX_JAR_PATH env var)",
+        "Skip interactive prompts in chezmoi config",
+        "Document CI/automation setup examples in README",
+        "Test with GitHub Actions or similar CI system",
+        "Typecheck passes"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-006",
+      "title": "Document network-restricted setups (Zscaler, proxies)",
+      "description": "As a corporate user behind Zscaler/proxy, I want detailed instructions for getting bootstrap and downloads working.",
+      "acceptanceCriteria": [
+        "Expand Zscaler cert installation section with step-by-step instructions",
+        "Add git proxy configuration examples (http.proxy, https.proxy)",
+        "Add curl certificate error troubleshooting",
+        "Document offline JAR installation (manual download + local path)",
+        "Include common error messages for proxy/SSL interception",
+        "Typecheck passes"
+      ],
+      "priority": 6,
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}

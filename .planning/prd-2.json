@@ -1,0 +1,90 @@
+{
+  "project": "DotfilesManagerMac",
+  "branchName": "ralph/fix-sf-nvim-modifiable",
+  "description": "Fix Neovim error when sf.nvim attempts to paste output into a non-modifiable buffer, enabling seamless Salesforce CLI integration",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Diagnose sf.nvim buffer handling issue",
+      "description": "As a developer, I want to understand why sf.nvim fails with 'modifiable is off' error so we can fix it properly.",
+      "acceptanceCriteria": [
+        "Identify which sf.nvim command triggers the error (SF metadata push? retrieve? test run?)",
+        "Test if specific buffer types trigger it (help buffers, read-only files, etc.)",
+        "Review sf.nvim source code (xixiaofinland/sf.nvim) to understand buffer management",
+        "Document root cause in .planning/DEBUG_SF_NVIM.md with reproduction steps",
+        "Include stack trace and error context from original issue",
+        "Typecheck passes"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-002",
+      "title": "Implement buffer modifiable check in sf.nvim wrapper",
+      "description": "As a user, I want sf.nvim commands to work without buffer errors by checking modifiable state before writing.",
+      "acceptanceCriteria": [
+        "Add guard checking vim.bo.modifiable before sf.nvim output operations",
+        "If non-modifiable: create new scratch buffer or toggle modifiable safely",
+        "Preserve existing buffer content and state",
+        "Maintain all existing sf.nvim functionality",
+        "No breaking changes to current sf.nvim workflows",
+        "Typecheck passes"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-003",
+      "title": "Add error recovery and user guidance",
+      "description": "As a user experiencing the error, I want helpful guidance on how to recover or prevent it.",
+      "acceptanceCriteria": [
+        "Catch 'modifiable is off' error specifically in error handler",
+        "Display actionable message (e.g., 'Buffer is read-only. Create new buffer? [y/n]')",
+        "Suggest creating new buffer, opening in split, or toggling modifiable",
+        "Log detailed error info to Neovim log for debugging",
+        "Prevent error from blocking user workflow",
+        "Typecheck passes"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-004",
+      "title": "Test fix with all SF commands",
+      "description": "As a developer using sf.nvim, I want all Salesforce commands to work without buffer errors.",
+      "acceptanceCriteria": [
+        "Test <leader>sp (SF metadata push) — no error, output visible",
+        "Test <leader>sr (SF metadata retrieve) — no error, output visible",
+        "Test <leader>sta (SF apex test run_all) — no error, output visible",
+        "Test <leader>stt (SF apex test run_current) — no error, output visible",
+        "Test <leader>so (SF org open) — no error, opens browser",
+        "Test <leader>sl (SF org list) — no error, shows org list",
+        "All tests pass without modifiable buffer errors",
+        "Typecheck passes"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-005",
+      "title": "Document error and fix in README Troubleshooting",
+      "description": "As a user, I want to know why this error happened and how to prevent it in the future.",
+      "acceptanceCriteria": [
+        "Add 'sf.nvim buffer modifiable error' section to Troubleshooting",
+        "Explain what 'modifiable is off' means and why it happens",
+        "Document the automatic fix applied in our config",
+        "Include manual workaround (toggle modifiable, create new buffer)",
+        "Explain when this error might still occur (edge cases)",
+        "Link to DEBUG_SF_NVIM.md for technical details",
+        "Typecheck passes"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}

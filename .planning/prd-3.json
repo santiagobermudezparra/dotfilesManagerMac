@@ -1,0 +1,132 @@
+{
+  "project": "DotfilesManagerMac",
+  "branchName": "ralph/consolidate-dotfiles",
+  "description": "Audit personal devpods dotfiles repo and strategically consolidate useful components into DotfilesManagerMac with recursive, scalable implementation",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Audit personal dotfiles repo structure and contents",
+      "description": "As a project maintainer, I want to understand the contents of my personal dotfiles so I can identify reusable components.",
+      "acceptanceCriteria": [
+        "Document directory structure of https://github.com/santiagobermudezparra/dotfiles",
+        "List all dot_config/* subdirectories and their purpose",
+        "List all scripts/* scripts and their purpose",
+        "List shell aliases, functions, and profile configuration",
+        "Identify patterns: chezmoi templates, script conventions, etc.",
+        "Create .planning/DOTFILES_AUDIT.md with complete findings",
+        "Typecheck passes"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-002",
+      "title": "Map components to DotfilesManagerMac categories",
+      "description": "As a maintainer, I want to prioritize which personal dotfiles components to consolidate based on value and fit.",
+      "acceptanceCriteria": [
+        "Categorize each audit finding: (1) Directly applicable, (2) Requires adaptation, (3) Out of scope",
+        "Document rationale for each categorization",
+        "Include implementation difficulty estimate (easy, medium, hard)",
+        "Prioritize by value: core dev tools → nice-to-haves",
+        "Create .planning/CONSOLIDATION_ROADMAP.md with phased approach",
+        "Map components to specific stories below",
+        "Typecheck passes"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-003",
+      "title": "Integrate tmux configuration",
+      "description": "As a developer, I want tmux configured for efficient Mac/Neovim workflows, improving window and pane management.",
+      "acceptanceCriteria": [
+        "Review tmux config from personal dotfiles (dot_tmux.conf)",
+        "Adapt for Mac keybindings and Neovim integration",
+        "Add to DotfilesManagerMac as dot_tmux.conf",
+        "Include sensible defaults: prefix key, navigation, window naming",
+        "Update bootstrap to create ~/.tmux.conf symlink",
+        "Document tmux setup and key bindings in README",
+        "Test tmux + Neovim integration (split panes, window nav)",
+        "Typecheck passes"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-004",
+      "title": "Consolidate shell aliases and functions",
+      "description": "As a developer, I want useful shell aliases and functions available in my corporate Mac environment.",
+      "acceptanceCriteria": [
+        "Review dot_zshrc from personal dotfiles",
+        "Identify dev-workflow aliases (git shortcuts, sf CLI helpers, etc.)",
+        "Filter out: personal tools, internal company references, non-Mac specific",
+        "Adapt remaining aliases for DotfilesManagerMac context",
+        "Add to dot_zshrc in DotfilesManagerMac (or new dot_zsh_custom if needed)",
+        "Document new aliases in README 'Shell Aliases' section",
+        "Test aliases work in both interactive and scripted contexts",
+        "Typecheck passes"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-005",
+      "title": "Consolidate reusable scripts to bin/",
+      "description": "As a developer, I want utility scripts available that support Neovim, Apex, and Salesforce workflows.",
+      "acceptanceCriteria": [
+        "List all scripts from personal dotfiles scripts/ directory",
+        "Identify which support Neovim, Apex, or Salesforce development",
+        "Adapt selected scripts for Mac and DotfilesManagerMac context",
+        "Add to bin/ directory in DotfilesManagerMac",
+        "Update bootstrap to add bin/ to PATH during chezmoi apply",
+        "Document each script's purpose in README 'Scripts' section",
+        "Test scripts work after chezmoi apply",
+        "Typecheck passes"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-006",
+      "title": "Update .gitignore for recursive Ralph implementation",
+      "description": "As a future contributor, I want .gitignore configured to support recurring Ralph phases without re-configuration.",
+      "acceptanceCriteria": [
+        "Add .planning/prd.json (current Ralph PRD)",
+        "Add .planning/progress.txt (Ralph progress tracking)",
+        "Add .planning/archive/ (archived completed PRDs)",
+        "Add .planning/DEBUG_*.md (debug artifacts from phases)",
+        "Add .planning/AUDIT_*.md and *_ROADMAP.md (audit outputs)",
+        "Add *.swp, *.swo, *~, .DS_Store (editor/OS temporaries)",
+        "Verify .planning/ directory itself is tracked (for new PRDs)",
+        "Document strategy in README 'Extensibility' section",
+        "Typecheck passes"
+      ],
+      "priority": 6,
+      "passes": false,
+      "notes": "Partially completed in PRD prep; this story completes it"
+    },
+    {
+      "id": "US-007",
+      "title": "Document consolidation strategy and extensibility",
+      "description": "As a future contributor, I want to understand how to extend DotfilesManagerMac with new features using Ralph.",
+      "acceptanceCriteria": [
+        "Add 'Extensibility & Future PRDs' section to README",
+        "Explain .planning/ directory structure and purpose",
+        "Document how to create new Ralph PRDs for this project",
+        "Provide PRD template (reference PRDS.md structure)",
+        "Link to DOTFILES_AUDIT.md and CONSOLIDATION_ROADMAP.md for context",
+        "Include example: 'Adding a new feature: create prd-N.json, run Ralph'",
+        "Explain branch naming and merge strategy",
+        "Typecheck passes"
+      ],
+      "priority": 7,
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}

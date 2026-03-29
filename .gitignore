@@ -1,1 +1,15 @@
 bin/
+
+# Ralph/GSD Planning & Execution Artifacts
+.planning/prd.json
+.planning/progress.txt
+.planning/archive/
+.planning/DEBUG_*.md
+.planning/AUDIT_*.md
+.planning/*_ROADMAP.md
+
+# Temporary development files
+*.swp
+*.swo
+*~
+.DS_Store
