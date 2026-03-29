@@ -54,15 +54,23 @@ Create the chezmoi config file (this is where the TTY issue is solved):
 mkdir -p ~/.config/chezmoi
 cat > ~/.config/chezmoi/chezmoi.toml << 'EOF'
 [data]
-apexJarPath = "/Users/$(whoami)/.local/share/nvim/apex-ls/apex-jorje-lsp.jar"
+# IMPORTANT: Ensure this path is wrapped in double quotes
+apexJarPath = "/Users/santiagobermudez/.local/share/nvim/apex-ls/apex-jorje-lsp.jar"
 EOF
 ```
+
+> **Note:** The path **must** be wrapped in double quotes. If you are editing the `.chezmoi.toml.tmpl` file directly, ensure the template expression is also quoted:
+> ```
+> apexJarPath = "{{ .apexJarPath }}"
+> ```
+> Without the surrounding quotes, chezmoi renders an unquoted string which is invalid TOML and causes the error `map has no entry for key "apexJarPath"`.
 
 Or if you already have the Apex JAR downloaded elsewhere, point to that path:
 
 ```bash
 cat > ~/.config/chezmoi/chezmoi.toml << 'EOF'
 [data]
+# IMPORTANT: Ensure this path is wrapped in double quotes
 apexJarPath = "/path/to/your/apex-jorje-lsp.jar"
 EOF
 ```
@@ -109,15 +117,26 @@ After initial `chezmoi apply`, the bootstrap script will check for:
 
 ### Apex Language Server JAR
 
-The Apex LSP JAR must be downloaded separately. The bootstrap script attempts to download it automatically, but you can also download manually:
+The Apex LSP JAR must be downloaded separately. The bootstrap script attempts to download it automatically, but **if it fails** (empty directory, network timeout, broken link), download it manually:
 
 ```bash
-# Download apex-jorje-lsp.jar from GitHub releases
-curl -L https://github.com/forcedotcom/apex-jorje-lsp/releases/download/v[VERSION]/apex-jorje-lsp.jar \
-  -o ~/apex-jorje-lsp.jar
+# Step 1: Ensure the target directory exists
+mkdir -p ~/.local/share/nvim/apex-ls/
+
+# Step 2: Navigate there
+cd ~/.local/share/nvim/apex-ls/
+
+# Step 3: Download the JAR from Salesforce's official source
+curl -L -o apex-jorje-lsp.jar \
+  https://github.com/forcedotcom/salesforcedx-vscode/raw/main/packages/salesforcedx-vscode-apex/out/apex-jorje-lsp.jar
+
+# Step 4: Verify it downloaded correctly (should be several MB)
+ls -lh apex-jorje-lsp.jar
 ```
 
-**Or** use the convenient bootstrap:
+> **Why this URL?** The `salesforcedx-vscode` repository is the canonical source for `apex-jorje-lsp.jar`. The GitHub releases URL used in earlier versions of the bootstrap script may return a 404 or an outdated version.
+
+**Or** use the convenient bootstrap (if it works on your network):
 
 ```bash
 bash run_once_bootstrap.sh
@@ -139,10 +158,17 @@ The following values are **NOT committed** to git — they're stored in `~/.conf
 
 ```toml
 [data]
-apexJarPath = "/path/to/apex-jorje-lsp.jar"
+# IMPORTANT: Ensure this path is wrapped in double quotes
+apexJarPath = "/Users/santiagobermudez/.local/share/nvim/apex-ls/apex-jorje-lsp.jar"
 ```
 
 These values are interpolated into `apex_ls.lua.tmpl` when you run `chezmoi apply`.
+
+> **Template note:** In `.chezmoi.toml.tmpl`, the variable must be wrapped in quotes to remain valid TOML:
+> ```
+> apexJarPath = "{{ promptStringOnce . "apexJarPath" "Path to apex-jorje-lsp.jar" }}"
+> ```
+> Without the surrounding quotes, the rendered TOML is invalid and chezmoi will fail with a key-not-found error.
 
 ### Updating the Config
 
@@ -278,19 +304,38 @@ brew install openjdk@11
 
 ### "apexJarPath not set" or apex_ls not starting
 
-The bootstrap script failed to download the JAR. Download manually:
+**Most common cause:** The JAR file was never downloaded — the `~/.local/share/nvim/apex-ls/` directory exists but is empty. This happens when the bootstrap script creates the folder but fails to fetch the file (network timeout, broken link, etc.).
+
+**Fix — download the JAR manually:**
 
 ```bash
-# Download from GitHub releases
-curl -L https://github.com/forcedotcom/apex-jorje-lsp/releases \
-  -o ~/apex-jorje-lsp.jar
+mkdir -p ~/.local/share/nvim/apex-ls/
+cd ~/.local/share/nvim/apex-ls/
 
-# Then update chezmoi config
-chezmoi edit ~/.config/chezmoi/chezmoi.toml
-# Set apexJarPath = "/Users/YOU/apex-jorje-lsp.jar"
+# Download from the canonical Salesforce VS Code extension source
+curl -L -o apex-jorje-lsp.jar \
+  https://github.com/forcedotcom/salesforcedx-vscode/raw/main/packages/salesforcedx-vscode-apex/out/apex-jorje-lsp.jar
 
-# Reapply
+# Verify (should be several MB)
+ls -lh apex-jorje-lsp.jar
+```
+
+Then confirm your chezmoi config points to the right path and reapply:
+
+```bash
+cat ~/.config/chezmoi/chezmoi.toml
+# Should show: apexJarPath = "/Users/YOU/.local/share/nvim/apex-ls/apex-jorje-lsp.jar"
+
 chezmoi apply
+```
+
+**Second possible cause:** The TOML value is missing quotes. Open `~/.config/chezmoi/chezmoi.toml` and confirm the path is surrounded by double quotes:
+
+```toml
+[data]
+apexJarPath = "/Users/YOU/.local/share/nvim/apex-ls/apex-jorje-lsp.jar"
+#             ^                                                           ^
+#             Must have opening and closing double quotes
 ```
 
 ### Zscaler SSL cert errors
@@ -441,22 +486,32 @@ cd ~/.local/share/chezmoi && git pull origin main
 ls dot_config/nvim/
 ```
 
-### Problem 3: chezmoi apply fails because apexJarPath is missing
+### Problem 3: chezmoi apply fails because apexJarPath is missing or unquoted
 
 ```bash
 # ❌ Error: "map has no entry for key "apexJarPath""
 # The `.chezmoi.toml.tmpl` file tries to render {{ .apexJarPath }}
-# but the config file doesn't exist yet
+# but the config file doesn't exist yet — OR — the value exists but
+# is missing surrounding double quotes, making it invalid TOML.
 
-# ✅ Fixed by creating the config file manually:
+# ✅ Fixed by creating the config file manually with proper quoting:
 mkdir -p ~/.config/chezmoi
 cat > ~/.config/chezmoi/chezmoi.toml << 'EOF'
 [data]
-apexJarPath = "/Users/YOU/.local/share/nvim/apex-ls/apex-jorje-lsp.jar"
+apexJarPath = "/Users/santiagobermudez/.local/share/nvim/apex-ls/apex-jorje-lsp.jar"
 EOF
 
+# KEY LESSON: The path value MUST be wrapped in double quotes.
+# apexJarPath = /some/path     ← invalid TOML, causes key-not-found errors
+# apexJarPath = "/some/path"   ← valid TOML ✅
+
+# In the .chezmoi.toml.tmpl source file, the template expression must
+# also be quoted so the rendered output is valid:
+# apexJarPath = "{{ .apexJarPath }}"   ← correct ✅
+# apexJarPath = {{ .apexJarPath }}     ← renders unquoted, broken ❌
+
 # Now chezmoi apply works
-./bin/chezmoi apply
+chezmoi apply
 ```
 
 ### Problem 4: The chezmoi init prompt can't open TTY in CI/headless mode
@@ -469,6 +524,23 @@ EOF
 # ✅ Fixed by creating the config file before running init
 # (See Problem 3 above)
 ```
+
+### Problem 5: The Apex JAR directory exists but is empty
+
+```bash
+# ❌ Symptom: ~/.local/share/nvim/apex-ls/ exists but no .jar inside
+# The bootstrap script created the folder but the download failed silently
+# (broken URL, network timeout, or Zscaler blocking the request)
+
+# ✅ Fixed by downloading from the canonical source manually:
+cd ~/.local/share/nvim/apex-ls/
+curl -L -o apex-jorje-lsp.jar \
+  https://github.com/forcedotcom/salesforcedx-vscode/raw/main/packages/salesforcedx-vscode-apex/out/apex-jorje-lsp.jar
+
+ls -lh apex-jorje-lsp.jar  # Verify: should be several MB
+```
+
+---
 
 ## Security & Compliance
 
@@ -490,12 +562,3 @@ For issues or feedback:
 4. Open an issue on GitHub: [DotfilesManagerMac Issues](https://github.com/santiagobermudezparra/DotfilesManagerMac/issues)
 
 ---
-
-## License
-
-MIT — See LICENSE file (if present).
-
----
-
-**Last updated:** 2026-03-27
-**Phase:** 01 — Neovim Setup (Complete)
