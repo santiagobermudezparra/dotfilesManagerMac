@@ -373,6 +373,26 @@ Mason auto-installs `typescript-language-server` on first `:Mason` open. If it f
 # Find typescript-language-server, press 'i' to install
 ```
 
+### sf.nvim "modifiable is off" error
+
+**Error:** `Error executing lua: vim/_editor.lua:0: Vim:E21: Cannot make changes, 'modifiable' is off`
+
+**When:** Running sf.nvim commands (`<leader>sl`, `<leader>sp`, etc.) in a read-only or special buffer (help, preview, etc.)
+
+**Why:** sf.nvim's error handler tries to display messages in the current buffer, which may be non-modifiable (read-only files, help buffers, preview panes, etc.).
+
+**Fix:** Our config wraps sf.nvim commands with a buffer safety check that:
+1. Saves the current buffer's modifiable state
+2. Temporarily makes it modifiable for error messages
+3. Restores the original state afterward
+
+**If error persists:**
+- Ensure you're in a modifiable buffer: `:set modifiable`
+- Or open a new file/buffer before running sf commands
+- Check that your Salesforce project has `sfdx-project.json` or `.forceignore` in the root
+
+**Technical details:** See `.planning/DEBUG_SF_NVIM.md` for root cause analysis.
+
 ---
 
 ## Development Workflow

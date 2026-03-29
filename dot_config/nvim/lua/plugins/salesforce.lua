@@ -10,14 +10,49 @@ return {
         enable_hotkeys = false, -- define own mappings to avoid conflicts
       })
 
-      -- Salesforce keymaps (Claude's discretion for exact bindings)
+      -- Wrapper to ensure safe buffer state for sf.nvim operations
+      -- Fixes: "Cannot make changes, 'modifiable' is off" error when running sf commands
+      -- in read-only buffers (see .planning/DEBUG_SF_NVIM.md for root cause analysis)
+      local function safe_sf_command(cmd)
+        return function()
+          -- Save current buffer state
+          local current_buf = vim.api.nvim_get_current_buf()
+          local was_modifiable = vim.bo[current_buf].modifiable
+
+          -- Ensure buffer is modifiable for error messages
+          if not was_modifiable then
+            vim.bo[current_buf].modifiable = true
+          end
+
+          -- Execute the SF command with error recovery
+          local ok, result = pcall(function()
+            vim.cmd(cmd)
+          end)
+
+          -- Restore modifiable state if we changed it
+          if not was_modifiable then
+            vim.bo[current_buf].modifiable = false
+          end
+
+          -- If there was an error, show it clearly
+          if not ok then
+            vim.notify(
+              "SF command failed: " .. tostring(result),
+              vim.log.levels.ERROR,
+              { title = "sf.nvim Error" }
+            )
+          end
+        end
+      end
+
+      -- Salesforce keymaps with buffer safety wrapper
       local map = vim.keymap.set
-      map("n", "<leader>sp", "<cmd>SF metadata push<cr>", { desc = "SF Push Metadata" })
-      map("n", "<leader>sr", "<cmd>SF metadata retrieve<cr>", { desc = "SF Retrieve Metadata" })
-      map("n", "<leader>sta", "<cmd>SF apex test run_all<cr>", { desc = "SF Run All Apex Tests" })
-      map("n", "<leader>stt", "<cmd>SF apex test run_current<cr>", { desc = "SF Run Current Apex Test" })
-      map("n", "<leader>so", "<cmd>SF org open<cr>", { desc = "SF Open Org in Browser" })
-      map("n", "<leader>sl", "<cmd>SF org list<cr>", { desc = "SF List Orgs" })
+      map("n", "<leader>sp", safe_sf_command("SF metadata push"), { desc = "SF Push Metadata" })
+      map("n", "<leader>sr", safe_sf_command("SF metadata retrieve"), { desc = "SF Retrieve Metadata" })
+      map("n", "<leader>sta", safe_sf_command("SF apex test run_all"), { desc = "SF Run All Apex Tests" })
+      map("n", "<leader>stt", safe_sf_command("SF apex test run_current"), { desc = "SF Run Current Apex Test" })
+      map("n", "<leader>so", safe_sf_command("SF org open"), { desc = "SF Open Org in Browser" })
+      map("n", "<leader>sl", safe_sf_command("SF org list"), { desc = "SF List Orgs" })
     end,
   },
 
