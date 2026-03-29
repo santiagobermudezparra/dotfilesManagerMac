@@ -456,6 +456,64 @@ Mason auto-installs `typescript-language-server` on first `:Mason` open. If it f
 
 ---
 
+## Terminal Multiplexer (tmux)
+
+DotfilesManagerMac includes a tmux configuration optimized for Neovim workflows:
+
+**Key bindings:**
+- Mouse support enabled
+- Vi mode for copy-paste
+- Panes auto-rename based on working directory
+- Neovim-optimized escape time (10ms)
+- gruvbox-material color scheme
+
+**Start tmux:**
+```bash
+tmux new-session -s work
+```
+
+**Essential tmux commands:**
+- `Ctrl+B` — Prefix key
+- `Prefix |` — Split pane vertically
+- `Prefix -` — Split pane horizontally
+- `Prefix hjkl` — Navigate panes (vi keys)
+- `Prefix [` — Enter copy mode (vi keybindings)
+
+---
+
+## Shell Aliases
+
+The `dot_zshrc` provides useful shortcuts for common operations:
+
+**Editor:**
+- `v` — Open Neovim
+
+**System:**
+- `c` — Clear screen
+- `ll` — Long list format
+- `la` — List all files (including hidden)
+- `lt` — Tree view of directory
+- `cat` — bat (colored cat alternative, if installed)
+
+**To use:** These are automatically available after `chezmoi apply` and shell reload.
+
+---
+
+## Scripts (bin/)
+
+Utility scripts are included in `bin/` and added to PATH automatically:
+
+| Script | Purpose |
+|--------|---------|
+| `bulkreplace` | Bulk find-and-replace in files recursively |
+
+**Example:**
+```bash
+bulkreplace "*.ts" "OldName" "NewName"
+```
+
+---
+
 ## Development Workflow
 
 ### Open a Salesforce Project
@@ -630,6 +688,71 @@ ls -lh apex-jorje-lsp.jar  # Verify: should be several MB
 - Machine-specific values (JAR paths, org URLs) use chezmoi templates
 - `apexJarPath` stored locally in `~/.config/chezmoi/chezmoi.toml` (not committed)
 - Bootstrap script logs to stdout (no credential leakage)
+
+---
+
+## Extensibility & Future Enhancements
+
+DotfilesManagerMac is designed for recursive, scalable enhancement using the Ralph autonomous agent system.
+
+### Adding New Features
+
+New features are planned and executed as **Product Requirements Documents (PRDs)** stored in `.planning/`:
+
+```
+.planning/
+├── prd-1.json                 # Completed: Docs & Bootstrap improvements
+├── prd-2.json                 # Completed: Fix sf.nvim modifiable error
+├── prd-3.json                 # Completed: Consolidate personal dotfiles
+├── prd-N.json                 # Future: Add new features here
+├── DOTFILES_AUDIT.md          # Reference: Audit of source components
+├── CONSOLIDATION_ROADMAP.md   # Reference: Implementation phases
+└── archive/                   # Archived completed PRDs
+```
+
+### Planning for New PRDs
+
+When planning new features:
+
+1. **Create** a new `prd-N.json` file following the template below
+2. **Reference** existing documentation (DOTFILES_AUDIT.md, CONSOLIDATION_ROADMAP.md)
+3. **Execute** using Ralph: `bash .../ralph.sh run .planning/prd-N.json`
+4. **Review** and merge to main when complete
+5. **Archive** completed PRD to `.planning/archive/` if desired
+
+**PRD Template:**
+```json
+{
+  "project": "DotfilesManagerMac",
+  "branchName": "ralph/feature-name-kebab-case",
+  "description": "Brief description of feature",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Story title",
+      "description": "As a [user], I want [feature] so that [benefit]",
+      "acceptanceCriteria": [
+        "Criterion 1",
+        "Criterion 2",
+        "Typecheck passes"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}
+```
+
+### .gitignore Strategy
+
+The `.gitignore` is configured to:
+- ✅ Track `.planning/` directory itself (for version control of PRD structure)
+- ✅ Ignore generated artifacts (`prd.json`, `progress.txt`, `DEBUG_*.md`)
+- ✅ Ignore archives (`.planning/archive/`)
+- ✅ Support future PRD phases without re-configuration
+
+This allows multiple concurrent and sequential PRD phases without merge conflicts or pollution.
 
 ---
 

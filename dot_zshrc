@@ -1,0 +1,73 @@
+# DotfilesManagerMac Shell Configuration
+# Consolidated from personal dotfiles with Mac/corporate context
+
+# ~~~~~~~~~~~~~~~ Editors ~~~~~~~~~~~~~~~~~~~~~~~~
+
+if command -v nvim >/dev/null 2>&1; then
+  export EDITOR="nvim"
+  export VISUAL="nvim"
+  alias v=nvim
+fi
+
+# ~~~~~~~~~~~~~~~ Directories ~~~~~~~~~~~~~~~~~~~~~~~~
+
+export DOTFILES="$HOME/.local/share/chezmoi"
+
+# ~~~~~~~~~~~~~~~ Shell Aliases ~~~~~~~~~~~~~~~~~~~~~~~~
+
+# General shortcuts
+alias c=clear
+
+# ls improvements (requires lsd: brew install lsd)
+if command -v lsd >/dev/null 2>&1; then
+  alias ls=lsd
+  alias ll="lsd -lgh"
+  alias la="lsd -lathr"
+  alias lla="lsd -lgha"
+  alias lt="lsd --tree"
+fi
+
+# cat improvements (requires bat: brew install bat)
+if command -v bat >/dev/null 2>&1; then
+  alias cat=bat
+fi
+
+# ~~~~~~~~~~~~~~~ History ~~~~~~~~~~~~~~~~~~~~~~~~
+
+HISTFILE=~/.zsh_history
+HISTSIZE=100000
+SAVEHIST=100000
+
+setopt HIST_IGNORE_SPACE  # Don't save when prefixed with space
+setopt HIST_IGNORE_DUPS   # Don't save duplicate lines
+setopt SHARE_HISTORY      # Share history between sessions
+
+# ~~~~~~~~~~~~~~~ Prompt & Vi Mode ~~~~~~~~~~~~~~~~~~~~~~~~
+
+# Pure prompt (requires: brew install pure)
+if [[ "$OSTYPE" == darwin* ]]; then
+  fpath+=($(brew --prefix 2>/dev/null)/share/zsh/site-functions)
+fi
+
+autoload -U promptinit 2>/dev/null
+promptinit 2>/dev/null
+prompt pure 2>/dev/null
+
+# Vi mode
+bindkey -v
+export KEYTIMEOUT=1
+
+# ~~~~~~~~~~~~~~~ PATH Configuration ~~~~~~~~~~~~~~~~~~~~~~~~
+
+# Add ~/.local/bin and bin/ to PATH for scripts and binaries
+path=(
+    $path
+    $HOME/.local/bin
+    $DOTFILES/bin
+)
+
+# Remove duplicates and non-existent directories
+typeset -U path
+path=($^path(N-/))
+
+export PATH
