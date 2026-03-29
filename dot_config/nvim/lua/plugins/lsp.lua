@@ -28,7 +28,7 @@ return {
         jsonls = {
           settings = {
             json = {
-              schemas = require("schemastore").json.schemas(),
+              schemas = function() return require("schemastore").json.schemas() end,
               validate = { enable = true },
             },
           },
@@ -38,7 +38,7 @@ return {
           settings = {
             yaml = {
               schemaStore = { enable = false, url = "" },
-              schemas = require("schemastore").yaml.schemas(),
+              schemas = function() return require("schemastore").yaml.schemas() end,
             },
           },
         },

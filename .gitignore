@@ -13,3 +13,4 @@ bin/
 *.swo
 *~
 .DS_Store
+error.txt

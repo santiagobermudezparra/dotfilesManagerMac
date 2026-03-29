@@ -97,6 +97,43 @@ You should see the **gruvbox-material** colorscheme (warm brown/orange tones) on
 
 ---
 
+## After Pulling Changes
+
+Whenever you pull new changes from this repo (on any machine), run:
+
+```bash
+bash nvim-sync.sh
+```
+
+This script does two things in order:
+1. `chezmoi apply` — deploys updated dotfiles to `~/.config/nvim/`
+2. Syncs Neovim plugins via lazy.nvim — installs new plugins, removes deleted ones
+
+### Manual alternative (if the script doesn't work)
+
+```bash
+# Step 1: Apply dotfiles
+chezmoi apply
+
+# Step 2: Sync plugins
+nvim --headless -c "lua require('lazy').sync()" -c "qa"
+```
+
+> **Why `require('lazy').sync()`?** The `:Lazy sync` command used in some guides is a UI command
+> and doesn't work reliably in headless mode. The Lua API call `require('lazy').sync()` is the
+> correct headless equivalent.
+
+### Verify everything is working
+
+```bash
+nvim
+:checkhealth    # Check Neovim, LSP, and Treesitter health
+:Lazy           # View plugin status — all should show green/installed
+:Mason          # Check LSP server status
+```
+
+---
+
 ## Prerequisites
 
 Before running the one-liner, ensure your machine has:
@@ -278,6 +315,8 @@ DotfilesManagerMac/
 | `map has no entry for key "apexJarPath"` | Missing or unquoted config value | Create `~/.config/chezmoi/chezmoi.toml` with quoted path (see Step 3) |
 | `curl: (60) SSL certificate problem` | Zscaler/corporate proxy blocking | Add Zscaler cert to System Keychain (see Network-Restricted Setups below) |
 | `apex-jorje-lsp.jar not found` | JAR download failed silently | Download manually (see Apex Language Server JAR section) |
+| `module 'tokyonight' not found` | Plugins not installed yet | Run `bash nvim-sync.sh` or open nvim and wait for lazy.nvim to finish |
+| `module 'schemastore' not found` | Plugins not installed yet | Run `bash nvim-sync.sh` — schemastore plugin needs to be downloaded first |
 | `Cannot make changes, 'modifiable' is off` | sf.nvim buffer error | Use fixed sf.nvim wrapper in config (see sf.nvim error section below) |
 | `Error: File not in a sf project folder` | Not in Salesforce project | Ensure project has `sfdx-project.json` or `.forceignore` in root |
 
