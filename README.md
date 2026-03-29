@@ -270,6 +270,19 @@ DotfilesManagerMac/
 
 ## Troubleshooting
 
+### Quick Lookup: Common Setup Failures
+
+| Error Message | Likely Cause | Solution |
+|---------------|--------------|----------|
+| `chezmoi: command not found` | chezmoi not in PATH | Add `~/.local/bin` to PATH: `export PATH="$HOME/.local/bin:$PATH"` |
+| `map has no entry for key "apexJarPath"` | Missing or unquoted config value | Create `~/.config/chezmoi/chezmoi.toml` with quoted path (see Step 3) |
+| `curl: (60) SSL certificate problem` | Zscaler/corporate proxy blocking | Add Zscaler cert to System Keychain (see Network-Restricted Setups below) |
+| `apex-jorje-lsp.jar not found` | JAR download failed silently | Download manually (see Apex Language Server JAR section) |
+| `Cannot make changes, 'modifiable' is off` | sf.nvim buffer error | Use fixed sf.nvim wrapper in config (see sf.nvim error section below) |
+| `Error: File not in a sf project folder` | Not in Salesforce project | Ensure project has `sfdx-project.json` or `.forceignore` in root |
+
+---
+
 ### The one-liner doesn't work ("chezmoi: command not found" or nothing happens)
 
 **Why:** The original one-liner doesn't work because:
@@ -338,16 +351,64 @@ apexJarPath = "/Users/YOU/.local/share/nvim/apex-ls/apex-jorje-lsp.jar"
 #             Must have opening and closing double quotes
 ```
 
-### Zscaler SSL cert errors
+### Network-Restricted Setups (Zscaler, Corporate Proxy, SSL Interception)
 
-If curl fails with certificate errors, macOS System Keychain must trust the Zscaler root cert:
+**Symptom:** curl fails with `SSL certificate problem` or `certificate verify failed`
 
-1. Download Zscaler root cert via your company's network
-2. Add to System Keychain: `Keychain Access > Add Certificates`
-3. Trust the cert for `SSL`
-4. Retry the one-liner
+**Why:** Corporate networks (Zscaler, proxies, SSL inspection) intercept HTTPS traffic and require additional certificates.
 
-The bootstrap script uses `-fSL` (no `-k` bypass) and trusts the system cert chain.
+**Solution:**
+
+#### Step 1: Trust Zscaler Root Cert on macOS
+
+1. **Download the Zscaler root cert:**
+   - Contact your IT department or download from your Zscaler admin portal
+   - Usually named `ZscalerRootCert.cer` or similar
+
+2. **Add to macOS System Keychain:**
+   - Open Keychain Access: `Cmd+Space` → "Keychain Access"
+   - Drag the cert into Keychain Access, or go to File → Import Items
+   - Select the cert in the System keychain
+   - Double-click it, expand the "Trust" section
+   - Set "When using this certificate" → "Always Trust"
+   - Enter your Mac password to confirm
+
+3. **Verify:** Test curl
+   ```bash
+   curl -I https://github.com
+   # Should return HTTP/2 200 OK, not a certificate error
+   ```
+
+#### Step 2: Configure Git Proxy (if behind corporate proxy)
+
+```bash
+git config --global http.proxy http://proxy.company.com:8080
+git config --global https.proxy https://proxy.company.com:8080
+
+# If using Zscaler with auth, include credentials:
+# git config --global http.proxy http://username:password@proxy.company.com:8080
+```
+
+#### Step 3: Bootstrap with Environment Variables (if still failing)
+
+If automatic download fails, use environment variables for offline setup:
+
+```bash
+# Download JAR manually on a machine with network access, then:
+export APEX_JAR_PATH="/path/to/apex-jorje-lsp.jar"
+chezmoi apply
+```
+
+#### Step 4: Check Bootstrap Logs
+
+The bootstrap script logs all details to `~/.local/share/dotfiles-bootstrap.log`:
+
+```bash
+cat ~/.local/share/dotfiles-bootstrap.log | grep ERROR
+# Shows exact failure point (network timeout, certificate error, etc.)
+```
+
+The bootstrap script uses robust error detection (no `-k` bypass) and trusts the system cert chain.
 
 ### "lazy.nvim failed to download"
 
