@@ -3,7 +3,7 @@ return {
   -- Requires: sf CLI v2 (`sf` command) and Neovim v0.11+
   -- Activates only in Salesforce projects (sfdx-project.json or .forceignore)
   {
-    "xixiaofinland/sf.nvim",
+    "santiagobermudezparra/sf.nvim",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = function()
       require("sf").setup({
