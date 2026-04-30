@@ -46,6 +46,49 @@ log_info() {
 
 log_info "DotfilesManagerMac bootstrap starting..."
 
+# --- Ensure Homebrew + Core Tools ---
+ensure_brew() {
+  if command -v brew >/dev/null 2>&1; then
+    return 0
+  fi
+
+  log_warn "Homebrew not found. Installing Homebrew..."
+  NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || {
+    log_error "Failed to install Homebrew. Install it manually and re-run: chezmoi apply"
+    return 1
+  }
+
+  if [ -x "/opt/homebrew/bin/brew" ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  elif [ -x "/usr/local/bin/brew" ]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+  fi
+}
+
+install_formula_if_missing() {
+  local formula="$1"
+  if brew list --formula "$formula" >/dev/null 2>&1; then
+    log_info "✓ $formula already installed"
+  else
+    log_info "Installing $formula via Homebrew..."
+    brew install "$formula" >> "$LOG_FILE" 2>&1 || log_warn "Could not install $formula automatically"
+  fi
+}
+
+if ensure_brew; then
+  install_formula_if_missing "neovim"
+  install_formula_if_missing "tmux"
+  install_formula_if_missing "pure"
+  install_formula_if_missing "bat"
+  install_formula_if_missing "lsd"
+  install_formula_if_missing "fd"
+  install_formula_if_missing "fzf"
+  install_formula_if_missing "ripgrep"
+  install_formula_if_missing "node"
+  install_formula_if_missing "openjdk@11"
+  install_formula_if_missing "jq"
+fi
+
 # --- Apex LSP JAR Download (with exponential backoff & retries) ---
 if [ -f "$JAR_PATH" ]; then
   log_info "apex-jorje-lsp.jar already exists at $JAR_PATH, skipping download."

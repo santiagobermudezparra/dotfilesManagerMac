@@ -4,20 +4,17 @@ A corporate Mac Neovim setup using **chezmoi**, designed for restricted network 
 
 ## Quick Start
 
-### Prerequisites (Install First)
+### Prerequisites
 
-Before setting up, install these tools on a fresh Mac:
+The bootstrap now auto-installs missing core tools with Homebrew (`tmux`, `pure`, `neovim`, `openjdk@11`, `node`, `bat`, `lsd`, `fd`, `fzf`, `ripgrep`, `jq`).
+
+On a fresh Mac, you only need:
 
 ```bash
-# Install Homebrew (if not already installed)
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-# Install required tools
-brew install neovim         # Neovim v0.11+
-brew install openjdk@11    # Java for Apex LSP
-# Optional but recommended:
-brew install node          # Node.js for TypeScript/JavaScript
+xcode-select --install || true
 ```
+
+Homebrew will be installed automatically if missing.
 
 ### Fresh Machine Setup (Step-by-Step)
 
@@ -83,7 +80,7 @@ chezmoi apply
 
 This will:
 - Deploy Neovim config to `~/.config/nvim/`
-- Run the bootstrap script (downloads Apex JAR if needed)
+- Run the bootstrap script (installs missing tools and downloads Apex JAR if needed)
 - Verify all prerequisites
 
 #### Step 5: Open Neovim

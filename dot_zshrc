@@ -42,18 +42,33 @@ setopt HIST_IGNORE_SPACE  # Don't save when prefixed with space
 setopt HIST_IGNORE_DUPS   # Don't save duplicate lines
 setopt SHARE_HISTORY      # Share history between sessions
 
-# ~~~~~~~~~~~~~~~ Prompt & Vi Mode ~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~ Prompt ~~~~~~~~~~~~~~~~~~~~~~~~
 
-# Pure prompt (requires: brew install pure)
-if [[ "$OSTYPE" == darwin* ]]; then
-  fpath+=($(brew --prefix 2>/dev/null)/share/zsh/site-functions)
+# Pure — minimal async prompt, no wizard, works everywhere
+# Docs: https://github.com/sindresorhus/pure
+
+# Don't auto-pull git remotes (keeps prompt snappy)
+PURE_GIT_PULL=0
+
+# Async git status (non-blocking)
+PURE_ASYNC_WORK_IN_PROGRESS=1
+
+# Use a clean ❯ symbol in a muted colour instead of the default magenta
+zstyle ':prompt:pure:prompt:success' color '#8ec07c'  # green on success
+zstyle ':prompt:pure:prompt:error'   color '#fb4934'  # red on error
+zstyle ':prompt:pure:git:branch'     color '#d79921'  # yellow branch name
+zstyle ':prompt:pure:path'           color '#83a598'  # blue path
+zstyle ':prompt:pure:git:dirty'      color '#d65d0e'  # orange when dirty
+
+if command -v brew >/dev/null 2>&1; then
+  fpath+=("$(brew --prefix)/share/zsh/site-functions")
 fi
 
-autoload -U promptinit 2>/dev/null
-promptinit 2>/dev/null
-prompt pure 2>/dev/null
+autoload -U promptinit; promptinit
+prompt pure
 
-# Vi mode
+# ~~~~~~~~~~~~~~~ Vi Mode ~~~~~~~~~~~~~~~~~~~~~~~~
+
 bindkey -v
 export KEYTIMEOUT=1
 
