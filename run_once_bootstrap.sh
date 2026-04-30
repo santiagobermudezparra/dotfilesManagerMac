@@ -87,6 +87,24 @@ if ensure_brew; then
   install_formula_if_missing "node"
   install_formula_if_missing "openjdk@11"
   install_formula_if_missing "jq"
+
+  # Link openjdk@11 so 'java' is on PATH (required for Apex LSP)
+  JDK_SRC="$(brew --prefix openjdk@11)/libexec/openjdk.jdk"
+  JDK_DST="/Library/Java/JavaVirtualMachines/openjdk-11.jdk"
+  if [ -d "$JDK_SRC" ] && [ ! -e "$JDK_DST" ]; then
+    log_info "Linking openjdk@11 so 'java' command is available..."
+    sudo ln -sfn "$JDK_SRC" "$JDK_DST" >> "$LOG_FILE" 2>&1 || log_warn "Could not symlink openjdk — run manually: sudo ln -sfn $JDK_SRC $JDK_DST"
+  fi
+
+  # Install Salesforce CLI via npm (requires node installed above)
+  if ! command -v sf >/dev/null 2>&1; then
+    log_info "Installing Salesforce CLI (sf)..."
+    npm install --global @salesforce/cli >> "$LOG_FILE" 2>&1 \
+      && log_info "✓ sf installed: $(sf --version 2>/dev/null | head -1)" \
+      || log_warn "Could not install Salesforce CLI — run manually: npm install -g @salesforce/cli"
+  else
+    log_info "✓ sf already installed: $(sf --version 2>/dev/null | head -1)"
+  fi
 fi
 
 # --- Apex LSP JAR Download (with exponential backoff & retries) ---
